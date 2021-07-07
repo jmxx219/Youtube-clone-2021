@@ -8,8 +8,10 @@ const PORT = 4000;
 
 const app = express(); // creates an express application
 const logger = morgan("dev"); // GET, path, status code 정보를 담고 있음
-app.use(logger);
 
+app.set("view engine", "pug");
+app.set("views", process.cwd() +"/src/views");
+app.use(logger);
 app.use("/", globalRouter)
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
