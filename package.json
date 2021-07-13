@@ -7,7 +7,7 @@
     "url": "git+https://github.com/jmxx219/Youtube-clone-2021.git"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/server.js"
+    "dev": "nodemon --exec babel-node src/init.js"
   },
   "author": "Jimin",
   "license": "MIT",
@@ -17,6 +17,7 @@
   "homepage": "https://github.com/jmxx219/Youtube-clone-2021#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mongoose": "^5.13.2",
     "morgan": "^1.10.0",
     "pug": "^3.0.2"
   },
