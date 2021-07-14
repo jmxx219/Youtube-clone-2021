@@ -1,8 +1,10 @@
 extends base.pug
 
 block content 
-    h4 Change Title of video
+    h4 Update video
     // method: form과 backend 사이의 정보 전송에 관한 방식
     form(method="POST")
         input(name="title", palceholder="Video Title", value=video.title, required)
+        input(name="description", placeholder="Description", required, type="text", minlength=20, value=video.description)
+        input(name="hashtags", placeholder="Hashtags, seperated by comma.", required, type="text", value=video.hashtags.join())
         input(value="Save", type="submit")
