@@ -1,0 +1,12 @@
+extends base
+include mixins/video
+
+block content 
+    <!-- GET - URL 정보가 보이도록 -->
+    form(method="GET")
+        input(name="keyword", placeholder="Search by title", type="text")
+        input(type="submit", value="Search Now")
+
+    div
+        each video in videos
+            +video(video)
