@@ -1,5 +1,6 @@
 import "./db"; // 파일 자체를 import -> 서버가 mongo에 연결
 import "./models/Video";
+import "./models/User";
 import app from "./server";
 
 
