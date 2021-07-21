@@ -57,6 +57,9 @@ export const postLogin = async(req, res) => {
         });
     }
     console.log("😊 LOG USER IN! COMING SOON! 😊");
+    // 세션을 initialize(초기화)하는 부분
+    req.session.loggedIn = true;
+    req.session.user = user;
     return res.redirect("/");
 };
 export const logout = (req, res) => res.send("Log Out");
