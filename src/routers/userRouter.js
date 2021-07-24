@@ -12,7 +12,7 @@ import {
 import {
   protectorMiddleware,
   publicOnlyMiddleware,
-  uploadFiles,
+  avatarFiles,
 } from "../middlewares";
 const userRouter = express.Router();
 
@@ -21,7 +21,7 @@ userRouter
   .route("/edit")
   .all(protectorMiddleware)
   .get(getEdit)
-  .post(uploadFiles.single("avater"), postEdit);
+  .post(avatarFiles.single("avatar"), postEdit);
 userRouter
   .route("/change-password")
   .all(protectorMiddleware)
@@ -30,6 +30,6 @@ userRouter
 
 userRouter.get("/github/start", publicOnlyMiddleware, startGithubLogin);
 userRouter.get("/github/finish", publicOnlyMiddleware, finishGithubLogin); // Authorization callback URL
-userRouter.get(":id", see);
+userRouter.get("/:id", see);
 
 export default userRouter;
