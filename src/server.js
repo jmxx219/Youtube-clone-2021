@@ -30,6 +30,7 @@ app.use(
 
 app.use(localsMiddleware); // session 미들웨어 다음으로 와야 session object에 접근할 수 있음
 app.use("/uploads", express.static("uploads"));
+app.use("/static", express.static("assets"));
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);

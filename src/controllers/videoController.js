@@ -2,7 +2,9 @@ import Video from "../models/Video";
 import User from "../models/User";
 
 export const home = async (req, res) => {
-  const videos = await Video.find({}).sort({ createdAt: "desc" }); // 최신 순으로 비디오 정렬
+  const videos = await Video.find({})
+    .sort({ createdAt: "desc" })
+    .populate("owner");
   return res.render("home", { pageTitle: "Home", videos }); // base.pug rendering
 };
 export const watch = async (req, res) => {
@@ -97,7 +99,6 @@ export const deleteVideo = async (req, res) => {
   await Video.findByIdAndDelete(id);
   return res.redirect("/");
 };
-
 export const search = async (req, res) => {
   const { keyword } = req.query;
   let videos = [];
@@ -107,7 +108,7 @@ export const search = async (req, res) => {
         // i: 글자의 대,소문자 구분 x, ^${keyword}: keyword 시작하는 단어만
         $regex: new RegExp(`${keyword}$`, "i"),
       },
-    });
+    }).populate("owner");
   }
   return res.render("search", { pageTitle: "Search", videos });
 };

@@ -1,12 +1,14 @@
 extends base
 include mixins/video
 
-block content 
-    <!-- GET - URL 정보가 보이도록 -->
-    form(method="GET")
+block content
+    form(method="GET").search__form
         input(name="keyword", placeholder="Search by title", type="text")
-        input(type="submit", value="Search Now")
+        button
+            i.fas.fa-search
 
-    div
+    div.video-grid
         each video in videos
             +video(video)
+        else
+            span.empty__message No videos found 
