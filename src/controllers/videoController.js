@@ -7,6 +7,7 @@ export const home = async (req, res) => {
     .populate("owner");
   return res.render("home", { pageTitle: "Home", videos }); // base.pug rendering
 };
+
 export const watch = async (req, res) => {
   // const id = req.params.id
   const { id } = req.params; // ES6
@@ -18,6 +19,7 @@ export const watch = async (req, res) => {
   }
   return res.render("watch", { pageTitle: video.title, video });
 };
+
 export const getEdit = async (req, res) => {
   const { id } = req.params;
   const {
@@ -32,6 +34,7 @@ export const getEdit = async (req, res) => {
   }
   return res.render("edit", { pageTitle: `Edit: ${video.title}`, video });
 };
+
 export const postEdit = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
@@ -52,9 +55,11 @@ export const postEdit = async (req, res) => {
   });
   return res.redirect(`/videos/${id}`); // 브라우저가 자동으로 이동하도록
 };
+
 export const getUpload = (req, res) => {
   return res.render("upload", { pageTitle: "Upload Video" });
 };
+
 export const postUpload = async (req, res) => {
   const {
     user: { _id },
@@ -99,6 +104,7 @@ export const deleteVideo = async (req, res) => {
   await Video.findByIdAndDelete(id);
   return res.redirect("/");
 };
+
 export const search = async (req, res) => {
   const { keyword } = req.query;
   let videos = [];
