@@ -3,6 +3,7 @@ import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
+
 export const postJoin = async (req, res) => {
   const { name, username, email, password, password2, location } = req.body;
   const pageTitle = "Join";
@@ -35,9 +36,11 @@ export const postJoin = async (req, res) => {
     });
   }
 };
+
 export const getLogin = (req, res) => {
   res.render("login", { pageTitle: "Login" });
 };
+
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const pageTitle = "Login";
@@ -62,6 +65,7 @@ export const postLogin = async (req, res) => {
   req.session.user = user;
   return res.redirect("/");
 };
+
 export const startGithubLogin = (req, res) => {
   // 1. Request a user's GitHub identity
   const baseUrl = "https://github.com/login/oauth/authorize";
@@ -75,6 +79,7 @@ export const startGithubLogin = (req, res) => {
 
   return res.redirect(finalUrl);
 };
+
 export const finishGithubLogin = async (req, res) => {
   // 2. Users are redirected back to your site by GitHub
   // 3. Use the access token to access the API
@@ -149,13 +154,17 @@ export const finishGithubLogin = async (req, res) => {
     return res.redirect("/login");
   }
 };
+
 export const logout = (req, res) => {
   req.session.destroy();
+  // req.flash("info", "Bye Bye");
   return res.redirect("/");
 };
+
 export const getEdit = (req, res) => {
   return res.render("edit-profile", { pageTitle: "Edit Profile" });
 };
+
 export const postEdit = async (req, res) => {
   const {
     session: {
@@ -190,12 +199,15 @@ export const postEdit = async (req, res) => {
 
   return res.redirect("/users/edit");
 };
+
 export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
+    req.flash("error", "Can't change password.");
     return res.redirect("/");
   }
   return res.render("users/change-password", { pageTitle: "Change Password" });
 };
+
 export const postChangePassword = async (req, res) => {
   const {
     session: {
@@ -222,9 +234,10 @@ export const postChangePassword = async (req, res) => {
   user.password = newPassword;
   await user.save(); // -> pre save(models/User) 작동 - 새로운 비밀번호 해싱
   req.session.user.password = user.password; // session도 업데이트
-
+  req.flash("info", "Password updated");
   return res.redirect("/users/logout");
 };
+
 export const see = async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id).populate({

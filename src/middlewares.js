@@ -13,6 +13,7 @@ export const protectorMiddleware = (req, res, next) => {
     // 로그인 되어있으면 계속 요청
     next();
   } else {
+    req.flash("error", "Log in first.");
     return res.redirect("/login");
   }
 };
@@ -21,6 +22,7 @@ export const publicOnlyMiddleware = (req, res, next) => {
     // // 로그인 되어있지 않으면 계속 요청
     return next();
   } else {
+    req.flash("error", "Not authorized");
     return res.redirect("/");
   }
 };
@@ -31,9 +33,16 @@ export const avatarFiles = multer({
     fileSize: 3000000,
   },
 });
+
 export const videoUpload = multer({
-  dest: "uploads/videos",
+  dest: "uploads/videos/",
   limits: {
     fileSize: 300000000, // 300MB
   },
 });
+
+export const sharedbufferMiddleware = (req, res, next) => {
+  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  res.header("Cross-Origin-Opener-Policy", "same-origin");
+  next();
+};
